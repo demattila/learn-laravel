@@ -14,7 +14,7 @@
 Route::get('/', function () {
 
     $tasks=[
-        'go shipping',
+        'go shopping',
         'go in the park',
         'go to the school'
     ];
