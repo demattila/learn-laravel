@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>@yield('title','Laracasts')</title>
+
     <style>
         ul {
             list-style-type: none;
@@ -25,13 +26,14 @@
 
         <div>
             <ul>
-                <li><a href="{{url('/')}}">Home</a></li>
-                <li><a href="{{url('about')}}">About</a></li>
-                <li><a href="{{url('contact')}}">Contact</a></li>
+                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('about') }}">About</a></li>
+                <li><a href="{{ url('contact') }}">Contact</a></li>
             </ul>
         </div>
 
     </header>
+
 @yield('content')
 
 </body>

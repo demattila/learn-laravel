@@ -11,25 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/','HomeController@home')->name('home');
+Route::get('/contact','HomeController@contact');
+Route::get('/about/{id?}','HomeController@about');
+Route::get('/demo','DemoController');
+Route::get('/post','PostController@index');
+Route::resource('posts', 'ProductController');
 
-    $tasks=[
-        'go shopping',
-        'go in the park',
-        'go to the school'
-    ];
 
-//    return view('welcome',[
-//        'tasks' => $task
-//    ]);
-
-    return view('welcome')->withTasks($tasks);
-});
-
-Route::get("/contact", function () {
-    return view('contact');
-});
-
-Route::get("/about/{id?}", function ($id="0") {
-    return view('about')->withId($id);
-});
