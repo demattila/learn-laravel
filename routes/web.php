@@ -11,11 +11,23 @@
 |
 */
 
-Route::get('/','HomeController@home')->name('home');
-Route::get('/contact','HomeController@contact');
-Route::get('/about/{id?}','HomeController@about');
+Route::get('/','HomeController@index')->name('home');
+Route::get('/contact','HomeController@contact')->name('contact');
+Route::get('/about/{id?}','HomeController@about')->name('about');
 Route::get('/demo','DemoController');
-Route::get('/post','PostController@index');
-Route::resource('posts', 'ProductController');
+
+//Posts CRUD
+//Route::get('/post','PostController@index');
+//Route::get('/post/create','PostController@create');
+//Route::get('/post/{post}','PostController@show');
+//Route::post('/post','PostController@store');
+//Route::get('/post/{post}/edit','PostController@edit');
+//Route::patch('/post/{post}','PostController@update');
+//Route::delete('/post','PostController@destroy');
+
+Route::resource('posts', 'PostController');
+
+
+Auth::routes();
 
 

@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home(){
-        $tasks=[
-            'go shopping',
-            'go to the park',
-            'go to the school'
-        ];
 
-        return view('welcome',[ 'tasks' => $tasks ] );
-//        return view('welcome')->withTasks($tasks);
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-    public  function contact(){
+    public function index()
+    {
+        return view('home');
+    }
+
+    public function  contact(){
         return view('contact');
     }
 
-    public function about($id=0){
-        return view('about')->withId($id);
+    public function  about($id=0){
+        return view('about',['id' => $id]);
     }
 }
