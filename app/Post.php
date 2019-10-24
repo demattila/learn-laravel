@@ -27,7 +27,16 @@ use Illuminate\Database\Query\Builder;
 class Post extends Model
 {
     protected $fillable = [
-        'title',
+        'name',
         'description'
     ];
+
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
+
+    public function addTask($task)
+    {
+        $this->tasks()->create($task);
+    }
 }

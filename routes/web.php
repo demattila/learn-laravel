@@ -27,6 +27,8 @@ Route::get('/demo','DemoController');
 
 Route::resource('posts', 'PostController');
 
+Route::post('/posts/{post}/tasks','PostTaskController@store')->name('tasks.store');
+Route::patch('/tasks/{task}','PostTaskController@update')->name('tasks.update');
 
 Auth::routes();
 

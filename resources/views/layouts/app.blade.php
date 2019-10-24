@@ -19,6 +19,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .is-complete{
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -26,6 +31,9 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
+                </a>
+                <a class="navbar-brand" href="{{route('posts.index')}}">
+                    Posts
                 </a>
                 <a class="navbar-brand" href="{{ url('/contact') }}">
                     Contact

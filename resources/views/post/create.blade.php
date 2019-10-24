@@ -4,7 +4,7 @@
 
         <div class="row">
             <div class="col-sm-6">
-                <h3>Add Product</h3>
+                <h3>Add Post</h3>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ route('posts.index') }}" class="btn btn-danger mb-2">Go Back</a>
@@ -26,6 +26,8 @@
                 <input class="form-control" type="text" name="description">
                 <span class="text-danger">{{ $errors->first('description') }}</span>
             </div>
+
+            @include('errors')
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" >Create Post</button>

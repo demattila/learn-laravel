@@ -2,6 +2,10 @@
 
 @section('content')
 
+    @if (Session::has('message'))
+        <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
+
     <div class="row">
         <div class="col-sm-6">
             <h3>Post List</h3>
@@ -27,14 +31,16 @@
                 @foreach($posts as $post)
                     <tr>
                         <td>{{ $post->id }}</td>
-                        <td>{{ $post->name }}</td>
+                        <td>
+                            <a href="{{route('posts.show',$post)}}"> {{ $post->name }} </a>
+                        </td>
                         <td>{{ $post->description }}</td>
                         <td>{{ date('Y-m-d', strtotime($post->created_at)) }}</td>
                         <td class="text-center">
                             <a href="{{ route('posts.edit',$post->id)}}" class="btn btn-primary">Edit</a></td>
                         <td class="text-center">
                             <form action="{{ route('posts.destroy', $post->id)}}" method="post">
-                                {{ csrf_field() }}
+                                @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>

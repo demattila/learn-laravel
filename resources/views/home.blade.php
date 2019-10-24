@@ -12,8 +12,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!<br>
+                    <div class="jumbotron text-center">
+                        Home Page
+                    </div>
                     <a href="{{route('posts.index')}}">Click here</a> to see the Posts!
                 </div>
             </div>
