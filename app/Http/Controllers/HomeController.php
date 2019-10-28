@@ -14,6 +14,13 @@ class HomeController extends Controller
 
     public function index()
     {
+        cache()->rememberForever('test_cache',function (){
+            return ['lessons' => 300, 'hours' => 5000, 'series' =>100];
+        });
+
+        $test_cache= cache()->get('test_cache');
+
+        dump($test_cache);
         return view('home');
     }
 

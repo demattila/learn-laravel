@@ -2,9 +2,12 @@
 
 namespace App;
 
+use App\Events\PostCreated;
+use App\Mail\PostCreated as PostCreatedMail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * App\Post
@@ -28,15 +31,35 @@ class Post extends Model
 {
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'owner_id'
     ];
+
+    protected $dispatchesEvents = [
+        'created' => PostCreated::class
+    ];
+
+    //eloquent model hook
+    protected static function boot()
+    {
+        parent::boot();
+//      static::created(function ($post){
+//            Mail::to($post->owner->email)->send(
+//                new PostCreatedMail($post)
+//            );
+//        });
+    }
 
     public function tasks(){
         return $this->hasMany(Task::class);
     }
-
     public function addTask($task)
     {
         $this->tasks()->create($task);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 }

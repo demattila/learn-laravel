@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
 
-            // meg kell ezt adni mindig ?
+
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

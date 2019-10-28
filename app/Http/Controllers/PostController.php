@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -14,9 +16,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts= Post::where('owner_id',auth()->id() )->get();
+        //$posts= Post::where('owner_id',auth()->id() )->get();
 
-        //return view('post.index')->withPosts($posts);
+        $posts = auth()->user()->posts;
         return view('post.index',['posts' => $posts]);
 
     }
@@ -28,28 +30,30 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $parameters = $request->validate([
             'name' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:255',
         ]);
+        $parameters['owner_id']=auth()->id();
 
-        //$parameters['owner_id']=auth()->id();
-        //Post::create($parameters);
+        $post = Post::create($parameters);
 
-        $post = new Post();
-        $post->name = $request->name;
-        $post->description = $request->description;
-        $post->owner_id = auth()->id();                      ////why ?
-        $post->save();
-
+        //custom event
+        //event(new PostCreated($post));
+        // or default event when created
 
         return redirect('posts');
     }
 
     public function show(Post $post)
     {
-        //may using policy or gate
-        abort_if($post->owner_id !== auth()->id(),403);
+        //may using policy or gate or in route ->middleware(can:) or in blade @can ( amikor pl mindenki latja az oldalt de csak egyeseknek lehet update gomb)
+        if ( auth()->user()->can('update',$post) ) ;
+//        abort_if($post->owner_id !== auth()->id(),403);
+
+//       $this->authorize('update',$post); // nem oké
+
+
 
         return view('post.show',['post' => $post]);
     }
@@ -64,8 +68,8 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
         ]);
 
         $update = ['name' => $request->name, 'description' => $request->description];
